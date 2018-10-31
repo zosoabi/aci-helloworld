@@ -20,4 +20,4 @@ spec:
     spec:
       containers:
       - name: aci-helloworld
-        image: qagit2dockerjenkins2vsts.azurecr.io/zosoabi/aci-helloworld:latest
+        image: qagit2dockerjenkins2vsts.azurecr.io/aci-helloworld:latest
