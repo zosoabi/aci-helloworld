@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aci-helloworld
+  namespace: default
+  labels:
+    app: aci-helloworld
+spec:
+  selector:
+    matchLabels:
+      app: aci-helloworld
+  replicas: 1
+  strategy:
+    type: Recreate
+    rollingUpdate: null
+  template:
+    metadata:
+      labels:
+        app: aci-helloworld
+    spec:
+      containers:
+      - name: aci-helloworld
+        image: qagit2dockerjenkins2vsts.azurecr.io/zosoabi/aci-helloworld:latest
