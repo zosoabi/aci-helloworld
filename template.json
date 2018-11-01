@@ -1,0 +1,932 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "databaseAccounts_qavalidateddb_name": {
+            "defaultValue": null,
+            "type": "SecureString"
+        },
+        "webhooks_vsts797350ilkiniskandarov_serviceUri": {
+            "defaultValue": null,
+            "type": "SecureString"
+        },
+        "serverfarms_qaASP_name": {
+            "defaultValue": "qaASP",
+            "type": "String"
+        },
+        "sites_qaValidatorPython_name": {
+            "defaultValue": "qaValidatorPython",
+            "type": "String"
+        },
+        "sites_qaPrismNodeMongoApi_name": {
+            "defaultValue": "qaPrismNodeMongoApi",
+            "type": "String"
+        },
+        "namespaces_qaNamespace_name": {
+            "defaultValue": "qaNamespace",
+            "type": "String"
+        },
+        "storageAccounts_qastorfiles_name": {
+            "defaultValue": "qastorfiles",
+            "type": "String"
+        },
+        "config_web_name": {
+            "defaultValue": "web",
+            "type": "String"
+        },
+        "config_web_name_1": {
+            "defaultValue": "web",
+            "type": "String"
+        },
+        "databaseAccounts_qavalidateddb_name_1": {
+            "defaultValue": "qavalidateddb",
+            "type": "String"
+        },
+        "managedClusters_qaAKSCluster_name": {
+            "defaultValue": "qaAKSCluster",
+            "type": "String"
+        },
+        "queues_qaqueue_name": {
+            "defaultValue": "qaqueue",
+            "type": "String"
+        },
+        "registries_qaGit2DockerJenkins2Vsts_name": {
+            "defaultValue": "qaGit2DockerJenkins2Vsts",
+            "type": "String"
+        },
+        "deployments_281541057252343_name": {
+            "defaultValue": "281541057252343",
+            "type": "String"
+        },
+        "deployments_271541057157231_name": {
+            "defaultValue": "271541057157231",
+            "type": "String"
+        },
+        "deployments_241540997761312_name": {
+            "defaultValue": "241540997761312",
+            "type": "String"
+        },
+        "deployments_221540997281233_name": {
+            "defaultValue": "221540997281233",
+            "type": "String"
+        },
+        "deployments_211540996790755_name": {
+            "defaultValue": "211540996790755",
+            "type": "String"
+        },
+        "deployments_201540991886121_name": {
+            "defaultValue": "201540991886121",
+            "type": "String"
+        },
+        "deployments_191540984075099_name": {
+            "defaultValue": "191540984075099",
+            "type": "String"
+        },
+        "deployments_181540983562297_name": {
+            "defaultValue": "181540983562297",
+            "type": "String"
+        },
+        "deployments_171540977753348_name": {
+            "defaultValue": "171540977753348",
+            "type": "String"
+        },
+        "deployments_161540977290648_name": {
+            "defaultValue": "161540977290648",
+            "type": "String"
+        },
+        "AuthorizationRules_RootManageSharedAccessKey_name": {
+            "defaultValue": "RootManageSharedAccessKey",
+            "type": "String"
+        },
+        "hostNameBindings_qavalidatorpython.azurewebsites.net_name": {
+            "defaultValue": "qavalidatorpython.azurewebsites.net",
+            "type": "String"
+        },
+        "hostNameBindings_qaprismnodemongoapi.azurewebsites.net_name": {
+            "defaultValue": "qaprismnodemongoapi.azurewebsites.net",
+            "type": "String"
+        },
+        "webhooks_vsts797350ilkiniskandarov_name": {
+            "defaultValue": "vsts797350ilkiniskandarov",
+            "type": "String"
+        },
+        "managedClusters_qaAKSCluster_logAnalyticsWorkspaceResourceID": {
+            "defaultValue": "/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourcegroups/defaultresourcegroup-eus/providers/microsoft.operationalinsights/workspaces/defaultworkspace-3ecfcac8-d2fa-4fc2-9027-9a68873afb7f-eus",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourceGroups/qaAKSCluster/providers/Microsoft.ContainerRegistry/registries/qaGit2DockerJenkins2Vsts'.",
+            "type": "Microsoft.ContainerRegistry/registries",
+            "sku": {
+                "name": "Basic",
+                "tier": "Basic"
+            },
+            "name": "[parameters('registries_qaGit2DockerJenkins2Vsts_name')]",
+            "apiVersion": "2017-10-01",
+            "location": "eastus",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "adminUserEnabled": true
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourcegroups/qaAKSCluster/providers/Microsoft.ContainerService/managedClusters/qaAKSCluster'.",
+            "type": "Microsoft.ContainerService/managedClusters",
+            "name": "[parameters('managedClusters_qaAKSCluster_name')]",
+            "apiVersion": "2018-03-31",
+            "location": "eastus",
+            "scale": null,
+            "properties": {
+                "kubernetesVersion": "1.9.11",
+                "dnsPrefix": "[concat('qaAKSClust-', parameters('managedClusters_qaAKSCluster_name'),'-3ecfca')]",
+                "agentPoolProfiles": [
+                    {
+                        "name": "nodepool1",
+                        "count": 1,
+                        "vmSize": "Standard_DS2_v2",
+                        "osDiskSizeGB": 30,
+                        "storageProfile": "ManagedDisks",
+                        "maxPods": 110,
+                        "osType": "Linux"
+                    }
+                ],
+                "linuxProfile": {
+                    "adminUsername": "azureuser",
+                    "ssh": {
+                        "publicKeys": [
+                            {
+                                "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjWfl4CqwH6sqlm+AI7nCkdHCT8RY2elf5lxV5DGb/DnTiNtKjO1AKmBCRBbsxABS/K5xyNhrq9n8srnFmwGg8lgRHudwSrWCcKn9JG5PdC5+Jln3A1HjKFHFA8dqwIYBJSHTheNkfLO8a4NEoHcu0rKJXHsF89sHySHA+PJD0+nIFKRFB4HvHFdUxh4GNFrqceChQEvw+/Oj4neZ89h0xDHeGIxarbyDqU8WG7y1N+Twgz6lzXHX8xwlrKk+odNC8Psw9c11lBaaFry9Sj5r/bcnvfI1m7uH/gvyRtK8CPyUW6TXcDIpGLEcPi3LMvPHaBPN8CTJMSWLdPBCL7eIx"
+                            }
+                        ]
+                    }
+                },
+                "servicePrincipalProfile": {
+                    "clientId": "702bceaf-b69b-4509-b203-fbdd5bd5aaad"
+                },
+                "addonProfiles": {
+                    "omsagent": {
+                        "enabled": true,
+                        "config": {
+                            "logAnalyticsWorkspaceResourceID": "[parameters('managedClusters_qaAKSCluster_logAnalyticsWorkspaceResourceID')]"
+                        }
+                    }
+                },
+                "enableRBAC": true,
+                "networkProfile": {
+                    "networkPlugin": "kubenet",
+                    "podCidr": "10.244.0.0/16",
+                    "serviceCidr": "10.0.0.0/16",
+                    "dnsServiceIP": "10.0.0.10",
+                    "dockerBridgeCidr": "172.17.0.1/16"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourceGroups/qaAKSCluster/providers/Microsoft.DocumentDB/databaseAccounts/qavalidateddb'.",
+            "type": "Microsoft.DocumentDB/databaseAccounts",
+            "kind": "MongoDB",
+            "name": "[parameters('databaseAccounts_qavalidateddb_name_1')]",
+            "apiVersion": "2015-04-08",
+            "location": "East US",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "databaseAccountOfferType": "Standard",
+                "consistencyPolicy": {
+                    "defaultConsistencyLevel": "Session",
+                    "maxIntervalInSeconds": 5,
+                    "maxStalenessPrefix": 100
+                },
+                "name": "[parameters('databaseAccounts_qavalidateddb_name')]"
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourceGroups/qaAKSCluster/providers/Microsoft.ServiceBus/namespaces/qaNamespace'.",
+            "type": "Microsoft.ServiceBus/namespaces",
+            "sku": {
+                "name": "Standard",
+                "tier": "Standard"
+            },
+            "name": "[parameters('namespaces_qaNamespace_name')]",
+            "apiVersion": "2017-04-01",
+            "location": "East US",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "metricId": "[concat('3ecfcac8-d2fa-4fc2-9027-9a68873afb7f:qanamespace', parameters('namespaces_qaNamespace_name'))]",
+                "createdAt": "2018-10-26T11:31:57.643Z",
+                "updatedAt": "2018-10-26T11:32:21.453Z",
+                "serviceBusEndpoint": "[concat('https://', parameters('namespaces_qaNamespace_name'),'.servicebus.windows.net:443/')]",
+                "status": "Active"
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourceGroups/qaAKSCluster/providers/Microsoft.Storage/storageAccounts/qastorfiles'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "StorageV2",
+            "name": "[parameters('storageAccounts_qastorfiles_name')]",
+            "apiVersion": "2018-07-01",
+            "location": "eastus",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Allow"
+                },
+                "supportsHttpsTrafficOnly": false,
+                "encryption": {
+                    "services": {
+                        "file": {
+                            "enabled": true
+                        },
+                        "blob": {
+                            "enabled": true
+                        }
+                    },
+                    "keySource": "Microsoft.Storage"
+                },
+                "accessTier": "Hot"
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourceGroups/qaAKSCluster/providers/Microsoft.Web/serverfarms/qaASP'.",
+            "type": "Microsoft.Web/serverfarms",
+            "sku": {
+                "name": "B1",
+                "tier": "Basic",
+                "size": "B1",
+                "family": "B",
+                "capacity": 1
+            },
+            "kind": "linux",
+            "name": "[parameters('serverfarms_qaASP_name')]",
+            "apiVersion": "2016-09-01",
+            "location": "East US",
+            "scale": null,
+            "properties": {
+                "name": "[parameters('serverfarms_qaASP_name')]",
+                "workerTierName": null,
+                "adminSiteName": null,
+                "hostingEnvironmentProfile": null,
+                "perSiteScaling": false,
+                "reserved": true,
+                "targetWorkerCount": 0,
+                "targetWorkerSizeId": 0
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourceGroups/qaAKSCluster/providers/Microsoft.Web/sites/qaValidatorPython'.",
+            "type": "Microsoft.Web/sites",
+            "kind": "app,linux,container",
+            "name": "[parameters('sites_qaValidatorPython_name')]",
+            "apiVersion": "2016-08-01",
+            "location": "East US",
+            "scale": null,
+            "properties": {
+                "enabled": true,
+                "hostNameSslStates": [
+                    {
+                        "name": "[concat(parameters('sites_qaValidatorPython_name'),'qavalidatorpython.azurewebsites.net')]",
+                        "sslState": "Disabled",
+                        "virtualIP": null,
+                        "thumbprint": null,
+                        "toUpdate": null,
+                        "hostType": "Standard"
+                    },
+                    {
+                        "name": "[concat(parameters('sites_qaValidatorPython_name'),'qavalidatorpython.scm.azurewebsites.net')]",
+                        "sslState": "Disabled",
+                        "virtualIP": null,
+                        "thumbprint": null,
+                        "toUpdate": null,
+                        "hostType": "Repository"
+                    }
+                ],
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_qaASP_name'))]",
+                "reserved": true,
+                "siteConfig": null,
+                "scmSiteAlsoStopped": false,
+                "hostingEnvironmentProfile": null,
+                "clientAffinityEnabled": true,
+                "clientCertEnabled": false,
+                "hostNamesDisabled": false,
+                "containerSize": 0,
+                "dailyMemoryTimeQuota": 0,
+                "cloningInfo": null
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_qaASP_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourceGroups/qaAKSCluster/providers/Microsoft.Web/sites/qaPrismNodeMongoApi'.",
+            "type": "Microsoft.Web/sites",
+            "kind": "app,linux,container",
+            "name": "[parameters('sites_qaPrismNodeMongoApi_name')]",
+            "apiVersion": "2016-08-01",
+            "location": "East US",
+            "scale": null,
+            "properties": {
+                "enabled": true,
+                "hostNameSslStates": [
+                    {
+                        "name": "[concat(parameters('sites_qaPrismNodeMongoApi_name'),'qaprismnodemongoapi.azurewebsites.net')]",
+                        "sslState": "Disabled",
+                        "virtualIP": null,
+                        "thumbprint": null,
+                        "toUpdate": null,
+                        "hostType": "Standard"
+                    },
+                    {
+                        "name": "[concat(parameters('sites_qaPrismNodeMongoApi_name'),'qaprismnodemongoapi.scm.azurewebsites.net')]",
+                        "sslState": "Disabled",
+                        "virtualIP": null,
+                        "thumbprint": null,
+                        "toUpdate": null,
+                        "hostType": "Repository"
+                    }
+                ],
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_qaASP_name'))]",
+                "reserved": true,
+                "siteConfig": null,
+                "scmSiteAlsoStopped": false,
+                "hostingEnvironmentProfile": null,
+                "clientAffinityEnabled": true,
+                "clientCertEnabled": false,
+                "hostNamesDisabled": false,
+                "containerSize": 0,
+                "dailyMemoryTimeQuota": 0,
+                "cloningInfo": null
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_qaASP_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourceGroups/qaAKSCluster/providers/Microsoft.ContainerRegistry/registries/qaGit2DockerJenkins2Vsts/webhooks/vsts797350ilkiniskandarov'.",
+            "type": "Microsoft.ContainerRegistry/registries/webhooks",
+            "name": "[concat(parameters('registries_qaGit2DockerJenkins2Vsts_name'), '/', parameters('webhooks_vsts797350ilkiniskandarov_name'))]",
+            "apiVersion": "2017-10-01",
+            "location": "eastus",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "status": "enabled",
+                "scope": "aci-helloworld:*",
+                "actions": [
+                    "push"
+                ],
+                "serviceUri": "[parameters('webhooks_vsts797350ilkiniskandarov_serviceUri')]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.ContainerRegistry/registries', parameters('registries_qaGit2DockerJenkins2Vsts_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourcegroups/qaAKSCluster/providers/Microsoft.ServiceBus/namespaces/qaNamespace/AuthorizationRules/RootManageSharedAccessKey'.",
+            "type": "Microsoft.ServiceBus/namespaces/AuthorizationRules",
+            "name": "[concat(parameters('namespaces_qaNamespace_name'), '/', parameters('AuthorizationRules_RootManageSharedAccessKey_name'))]",
+            "apiVersion": "2017-04-01",
+            "location": "East US",
+            "scale": null,
+            "properties": {
+                "rights": [
+                    "Listen",
+                    "Manage",
+                    "Send"
+                ]
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.ServiceBus/namespaces', parameters('namespaces_qaNamespace_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourcegroups/qaAKSCluster/providers/Microsoft.ServiceBus/namespaces/qaNamespace/queues/qaqueue'.",
+            "type": "Microsoft.ServiceBus/namespaces/queues",
+            "name": "[concat(parameters('namespaces_qaNamespace_name'), '/', parameters('queues_qaqueue_name'))]",
+            "apiVersion": "2017-04-01",
+            "location": "East US",
+            "scale": null,
+            "properties": {
+                "lockDuration": "PT5M",
+                "maxSizeInMegabytes": 1024,
+                "requiresDuplicateDetection": false,
+                "requiresSession": false,
+                "defaultMessageTimeToLive": "P10675199DT2H48M5.4775807S",
+                "deadLetteringOnMessageExpiration": false,
+                "enableBatchedOperations": true,
+                "duplicateDetectionHistoryTimeWindow": "PT10M",
+                "maxDeliveryCount": 10,
+                "status": "Active",
+                "autoDeleteOnIdle": "P10675199DT2H48M5.4775807S",
+                "enablePartitioning": false,
+                "enableExpress": false
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.ServiceBus/namespaces', parameters('namespaces_qaNamespace_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourceGroups/qaAKSCluster/providers/Microsoft.Web/sites/qaValidatorPython/config/web'.",
+            "type": "Microsoft.Web/sites/config",
+            "name": "[concat(parameters('sites_qaValidatorPython_name'), '/', parameters('config_web_name'))]",
+            "apiVersion": "2016-08-01",
+            "location": "East US",
+            "scale": null,
+            "properties": {
+                "numberOfWorkers": 1,
+                "defaultDocuments": [
+                    "Default.htm",
+                    "Default.html",
+                    "Default.asp",
+                    "index.htm",
+                    "index.html",
+                    "iisstart.htm",
+                    "default.aspx",
+                    "index.php",
+                    "hostingstart.html"
+                ],
+                "netFrameworkVersion": "v4.0",
+                "phpVersion": "",
+                "pythonVersion": "",
+                "nodeVersion": "",
+                "linuxFxVersion": "DOCKER|appsvcsample/python-helloworld",
+                "windowsFxVersion": null,
+                "requestTracingEnabled": false,
+                "remoteDebuggingEnabled": false,
+                "remoteDebuggingVersion": "VS2012",
+                "httpLoggingEnabled": false,
+                "logsDirectorySizeLimit": 35,
+                "detailedErrorLoggingEnabled": false,
+                "publishingUsername": "$qaValidatorPython",
+                "publishingPassword": null,
+                "appSettings": null,
+                "azureStorageAccounts": {},
+                "metadata": null,
+                "connectionStrings": null,
+                "machineKey": null,
+                "handlerMappings": null,
+                "documentRoot": null,
+                "scmType": "None",
+                "use32BitWorkerProcess": true,
+                "webSocketsEnabled": false,
+                "alwaysOn": false,
+                "javaVersion": null,
+                "javaContainer": null,
+                "javaContainerVersion": null,
+                "appCommandLine": "",
+                "managedPipelineMode": "Integrated",
+                "virtualApplications": [
+                    {
+                        "virtualPath": "/",
+                        "physicalPath": "site\\wwwroot",
+                        "preloadEnabled": false,
+                        "virtualDirectories": null
+                    }
+                ],
+                "winAuthAdminState": 0,
+                "winAuthTenantState": 0,
+                "customAppPoolIdentityAdminState": false,
+                "customAppPoolIdentityTenantState": false,
+                "runtimeADUser": null,
+                "runtimeADUserPassword": null,
+                "loadBalancing": "LeastRequests",
+                "routingRules": [],
+                "experiments": {
+                    "rampUpRules": []
+                },
+                "limits": null,
+                "autoHealEnabled": false,
+                "autoHealRules": null,
+                "tracingOptions": null,
+                "vnetName": "",
+                "siteAuthEnabled": false,
+                "siteAuthSettings": {
+                    "enabled": null,
+                    "unauthenticatedClientAction": null,
+                    "tokenStoreEnabled": null,
+                    "allowedExternalRedirectUrls": null,
+                    "defaultProvider": null,
+                    "clientId": null,
+                    "clientSecret": null,
+                    "issuer": null,
+                    "allowedAudiences": null,
+                    "additionalLoginParams": null,
+                    "isAadAutoProvisioned": false,
+                    "googleClientId": null,
+                    "googleClientSecret": null,
+                    "googleOAuthScopes": null,
+                    "facebookAppId": null,
+                    "facebookAppSecret": null,
+                    "facebookOAuthScopes": null,
+                    "twitterConsumerKey": null,
+                    "twitterConsumerSecret": null,
+                    "microsoftAccountClientId": null,
+                    "microsoftAccountClientSecret": null,
+                    "microsoftAccountOAuthScopes": null
+                },
+                "cors": null,
+                "push": null,
+                "apiDefinition": null,
+                "autoSwapSlotName": null,
+                "localMySqlEnabled": false,
+                "managedServiceIdentityId": null,
+                "xManagedServiceIdentityId": null,
+                "ipSecurityRestrictions": null,
+                "http20Enabled": false,
+                "minTlsVersion": "1.2",
+                "ftpsState": "AllAllowed",
+                "reservedInstanceCount": 0
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_qaValidatorPython_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourceGroups/qaAKSCluster/providers/Microsoft.Web/sites/qaValidatorPython/hostNameBindings/qavalidatorpython.azurewebsites.net'.",
+            "type": "Microsoft.Web/sites/hostNameBindings",
+            "name": "[concat(parameters('sites_qaValidatorPython_name'), '/', parameters('hostNameBindings_qavalidatorpython.azurewebsites.net_name'))]",
+            "apiVersion": "2016-08-01",
+            "location": "East US",
+            "scale": null,
+            "properties": {
+                "siteName": "qaValidatorPython",
+                "domainId": null,
+                "hostNameType": "Verified"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_qaValidatorPython_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourceGroups/qaAKSCluster/providers/Microsoft.Web/sites/qaPrismNodeMongoApi/config/web'.",
+            "type": "Microsoft.Web/sites/config",
+            "name": "[concat(parameters('sites_qaPrismNodeMongoApi_name'), '/', parameters('config_web_name_1'))]",
+            "apiVersion": "2016-08-01",
+            "location": "East US",
+            "scale": null,
+            "properties": {
+                "numberOfWorkers": 1,
+                "defaultDocuments": [
+                    "Default.htm",
+                    "Default.html",
+                    "Default.asp",
+                    "index.htm",
+                    "index.html",
+                    "iisstart.htm",
+                    "default.aspx",
+                    "index.php",
+                    "hostingstart.html"
+                ],
+                "netFrameworkVersion": "v4.0",
+                "phpVersion": "",
+                "pythonVersion": "",
+                "nodeVersion": "",
+                "linuxFxVersion": "DOCKER|qagit2dockerjenkins2vsts.azurecr.io/aci-helloworld",
+                "windowsFxVersion": null,
+                "requestTracingEnabled": false,
+                "remoteDebuggingEnabled": false,
+                "remoteDebuggingVersion": "VS2012",
+                "httpLoggingEnabled": false,
+                "logsDirectorySizeLimit": 35,
+                "detailedErrorLoggingEnabled": false,
+                "publishingUsername": "$qaPrismNodeMongoApi",
+                "publishingPassword": null,
+                "appSettings": null,
+                "azureStorageAccounts": {},
+                "metadata": null,
+                "connectionStrings": null,
+                "machineKey": null,
+                "handlerMappings": null,
+                "documentRoot": null,
+                "scmType": "LocalGit",
+                "use32BitWorkerProcess": true,
+                "webSocketsEnabled": false,
+                "alwaysOn": false,
+                "javaVersion": null,
+                "javaContainer": null,
+                "javaContainerVersion": null,
+                "appCommandLine": "",
+                "managedPipelineMode": "Integrated",
+                "virtualApplications": [
+                    {
+                        "virtualPath": "/",
+                        "physicalPath": "site\\wwwroot",
+                        "preloadEnabled": false,
+                        "virtualDirectories": null
+                    }
+                ],
+                "winAuthAdminState": 0,
+                "winAuthTenantState": 0,
+                "customAppPoolIdentityAdminState": false,
+                "customAppPoolIdentityTenantState": false,
+                "runtimeADUser": null,
+                "runtimeADUserPassword": null,
+                "loadBalancing": "LeastRequests",
+                "routingRules": [],
+                "experiments": {
+                    "rampUpRules": []
+                },
+                "limits": null,
+                "autoHealEnabled": false,
+                "autoHealRules": null,
+                "tracingOptions": null,
+                "vnetName": "",
+                "siteAuthEnabled": false,
+                "siteAuthSettings": {
+                    "enabled": null,
+                    "unauthenticatedClientAction": null,
+                    "tokenStoreEnabled": null,
+                    "allowedExternalRedirectUrls": null,
+                    "defaultProvider": null,
+                    "clientId": null,
+                    "clientSecret": null,
+                    "issuer": null,
+                    "allowedAudiences": null,
+                    "additionalLoginParams": null,
+                    "isAadAutoProvisioned": false,
+                    "googleClientId": null,
+                    "googleClientSecret": null,
+                    "googleOAuthScopes": null,
+                    "facebookAppId": null,
+                    "facebookAppSecret": null,
+                    "facebookOAuthScopes": null,
+                    "twitterConsumerKey": null,
+                    "twitterConsumerSecret": null,
+                    "microsoftAccountClientId": null,
+                    "microsoftAccountClientSecret": null,
+                    "microsoftAccountOAuthScopes": null
+                },
+                "cors": null,
+                "push": null,
+                "apiDefinition": null,
+                "autoSwapSlotName": null,
+                "localMySqlEnabled": false,
+                "managedServiceIdentityId": null,
+                "xManagedServiceIdentityId": null,
+                "ipSecurityRestrictions": null,
+                "http20Enabled": true,
+                "minTlsVersion": "1.2",
+                "ftpsState": "AllAllowed",
+                "reservedInstanceCount": 0
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_qaPrismNodeMongoApi_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourcegroups/qaAKSCluster/providers/Microsoft.Web/sites/qaPrismNodeMongoApi/deployments/281541057252343'.",
+            "type": "Microsoft.Web/sites/deployments",
+            "name": "[concat(parameters('sites_qaPrismNodeMongoApi_name'), '/', parameters('deployments_281541057252343_name'))]",
+            "apiVersion": "2016-08-01",
+            "location": "East US",
+            "scale": null,
+            "properties": {
+                "id": "[parameters('deployments_281541057252343_name')]",
+                "status": 4,
+                "author_email": "",
+                "author": "Ilkin Iskandarov",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"commitId\":\"68616cbc79502651ab14e7a635f45ca98ea68694\",\"buildId\":\"22\",\"releaseId\":\"28\",\"buildNumber\":\"22\",\"releaseName\":\"Release-26\",\"repoProvider\":\"GitHub\",\"collectionUrl\":\"https://dev.azure.com/IlkinIskandarov/\",\"teamProject\":\"dc4571d7-5d8a-4df5-a5a2-c188ebfd8c9f\",\"slotName\":\"production\"}",
+                "start_time": "2018-11-01T07:27:33.606443Z",
+                "end_time": "2018-11-01T07:27:33.606443Z",
+                "active": true
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_qaPrismNodeMongoApi_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourcegroups/qaAKSCluster/providers/Microsoft.Web/sites/qaPrismNodeMongoApi/deployments/271541057157231'.",
+            "type": "Microsoft.Web/sites/deployments",
+            "name": "[concat(parameters('sites_qaPrismNodeMongoApi_name'), '/', parameters('deployments_271541057157231_name'))]",
+            "apiVersion": "2016-08-01",
+            "location": "East US",
+            "scale": null,
+            "properties": {
+                "id": "[parameters('deployments_271541057157231_name')]",
+                "status": 4,
+                "author_email": "",
+                "author": "Ilkin Iskandarov",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"commitId\":\"68616cbc79502651ab14e7a635f45ca98ea68694\",\"buildId\":\"22\",\"releaseId\":\"27\",\"buildNumber\":\"22\",\"releaseName\":\"Release-25\",\"repoProvider\":\"GitHub\",\"collectionUrl\":\"https://dev.azure.com/IlkinIskandarov/\",\"teamProject\":\"dc4571d7-5d8a-4df5-a5a2-c188ebfd8c9f\",\"slotName\":\"production\"}",
+                "start_time": "2018-11-01T07:25:59.607123Z",
+                "end_time": "2018-11-01T07:25:59.607123Z",
+                "active": false
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_qaPrismNodeMongoApi_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourcegroups/qaAKSCluster/providers/Microsoft.Web/sites/qaPrismNodeMongoApi/deployments/241540997761312'.",
+            "type": "Microsoft.Web/sites/deployments",
+            "name": "[concat(parameters('sites_qaPrismNodeMongoApi_name'), '/', parameters('deployments_241540997761312_name'))]",
+            "apiVersion": "2016-08-01",
+            "location": "East US",
+            "scale": null,
+            "properties": {
+                "id": "[parameters('deployments_241540997761312_name')]",
+                "status": 4,
+                "author_email": "",
+                "author": "Ilkin Iskandarov",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"commitId\":\"68616cbc79502651ab14e7a635f45ca98ea68694\",\"buildId\":\"22\",\"releaseId\":\"24\",\"buildNumber\":\"22\",\"releaseName\":\"Release-23\",\"repoProvider\":\"GitHub\",\"collectionUrl\":\"https://dev.azure.com/IlkinIskandarov/\",\"teamProject\":\"dc4571d7-5d8a-4df5-a5a2-c188ebfd8c9f\",\"slotName\":\"production\"}",
+                "start_time": "2018-10-31T14:56:02.502188Z",
+                "end_time": "2018-10-31T14:56:02.502188Z",
+                "active": false
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_qaPrismNodeMongoApi_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourcegroups/qaAKSCluster/providers/Microsoft.Web/sites/qaPrismNodeMongoApi/deployments/221540997281233'.",
+            "type": "Microsoft.Web/sites/deployments",
+            "name": "[concat(parameters('sites_qaPrismNodeMongoApi_name'), '/', parameters('deployments_221540997281233_name'))]",
+            "apiVersion": "2016-08-01",
+            "location": "East US",
+            "scale": null,
+            "properties": {
+                "id": "[parameters('deployments_221540997281233_name')]",
+                "status": 4,
+                "author_email": "",
+                "author": "Ilkin Iskandarov",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"buildId\":\"19\",\"releaseId\":\"22\",\"buildNumber\":\"19\",\"releaseName\":\"Release-22\",\"collectionUrl\":\"https://dev.azure.com/IlkinIskandarov/\",\"teamProject\":\"dc4571d7-5d8a-4df5-a5a2-c188ebfd8c9f\",\"slotName\":\"production\"}",
+                "start_time": "2018-10-31T14:48:02.774669Z",
+                "end_time": "2018-10-31T14:48:02.774669Z",
+                "active": false
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_qaPrismNodeMongoApi_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourcegroups/qaAKSCluster/providers/Microsoft.Web/sites/qaPrismNodeMongoApi/deployments/211540996790755'.",
+            "type": "Microsoft.Web/sites/deployments",
+            "name": "[concat(parameters('sites_qaPrismNodeMongoApi_name'), '/', parameters('deployments_211540996790755_name'))]",
+            "apiVersion": "2016-08-01",
+            "location": "East US",
+            "scale": null,
+            "properties": {
+                "id": "[parameters('deployments_211540996790755_name')]",
+                "status": 4,
+                "author_email": "",
+                "author": "Ilkin Iskandarov",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"buildId\":\"19\",\"releaseId\":\"21\",\"buildNumber\":\"19\",\"releaseName\":\"Release-21\",\"collectionUrl\":\"https://dev.azure.com/IlkinIskandarov/\",\"teamProject\":\"dc4571d7-5d8a-4df5-a5a2-c188ebfd8c9f\",\"slotName\":\"production\"}",
+                "start_time": "2018-10-31T14:39:54.603966Z",
+                "end_time": "2018-10-31T14:39:54.603966Z",
+                "active": false
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_qaPrismNodeMongoApi_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourcegroups/qaAKSCluster/providers/Microsoft.Web/sites/qaPrismNodeMongoApi/deployments/201540991886121'.",
+            "type": "Microsoft.Web/sites/deployments",
+            "name": "[concat(parameters('sites_qaPrismNodeMongoApi_name'), '/', parameters('deployments_201540991886121_name'))]",
+            "apiVersion": "2016-08-01",
+            "location": "East US",
+            "scale": null,
+            "properties": {
+                "id": "[parameters('deployments_201540991886121_name')]",
+                "status": 4,
+                "author_email": "",
+                "author": "Ilkin Iskandarov",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"buildId\":\"19\",\"releaseId\":\"20\",\"buildNumber\":\"19\",\"releaseName\":\"Release-20\",\"collectionUrl\":\"https://dev.azure.com/IlkinIskandarov/\",\"teamProject\":\"dc4571d7-5d8a-4df5-a5a2-c188ebfd8c9f\",\"slotName\":\"production\"}",
+                "start_time": "2018-10-31T13:18:07.532156Z",
+                "end_time": "2018-10-31T13:18:07.532156Z",
+                "active": false
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_qaPrismNodeMongoApi_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourcegroups/qaAKSCluster/providers/Microsoft.Web/sites/qaPrismNodeMongoApi/deployments/191540984075099'.",
+            "type": "Microsoft.Web/sites/deployments",
+            "name": "[concat(parameters('sites_qaPrismNodeMongoApi_name'), '/', parameters('deployments_191540984075099_name'))]",
+            "apiVersion": "2016-08-01",
+            "location": "East US",
+            "scale": null,
+            "properties": {
+                "id": "[parameters('deployments_191540984075099_name')]",
+                "status": 4,
+                "author_email": "",
+                "author": "Ilkin Iskandarov",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"buildId\":\"19\",\"releaseId\":\"19\",\"buildNumber\":\"19\",\"releaseName\":\"Release-19\",\"collectionUrl\":\"https://dev.azure.com/IlkinIskandarov/\",\"teamProject\":\"dc4571d7-5d8a-4df5-a5a2-c188ebfd8c9f\",\"slotName\":\"production\"}",
+                "start_time": "2018-10-31T11:07:56.241809Z",
+                "end_time": "2018-10-31T11:07:56.241809Z",
+                "active": false
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_qaPrismNodeMongoApi_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourcegroups/qaAKSCluster/providers/Microsoft.Web/sites/qaPrismNodeMongoApi/deployments/181540983562297'.",
+            "type": "Microsoft.Web/sites/deployments",
+            "name": "[concat(parameters('sites_qaPrismNodeMongoApi_name'), '/', parameters('deployments_181540983562297_name'))]",
+            "apiVersion": "2016-08-01",
+            "location": "East US",
+            "scale": null,
+            "properties": {
+                "id": "[parameters('deployments_181540983562297_name')]",
+                "status": 4,
+                "author_email": "",
+                "author": "Ilkin Iskandarov",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"buildId\":\"18\",\"releaseId\":\"18\",\"buildNumber\":\"18\",\"releaseName\":\"Release-18\",\"collectionUrl\":\"https://dev.azure.com/IlkinIskandarov/\",\"teamProject\":\"dc4571d7-5d8a-4df5-a5a2-c188ebfd8c9f\",\"slotName\":\"production\"}",
+                "start_time": "2018-10-31T10:59:23.783278Z",
+                "end_time": "2018-10-31T10:59:23.783278Z",
+                "active": false
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_qaPrismNodeMongoApi_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourcegroups/qaAKSCluster/providers/Microsoft.Web/sites/qaPrismNodeMongoApi/deployments/171540977753348'.",
+            "type": "Microsoft.Web/sites/deployments",
+            "name": "[concat(parameters('sites_qaPrismNodeMongoApi_name'), '/', parameters('deployments_171540977753348_name'))]",
+            "apiVersion": "2016-08-01",
+            "location": "East US",
+            "scale": null,
+            "properties": {
+                "id": "[parameters('deployments_171540977753348_name')]",
+                "status": 4,
+                "author_email": "",
+                "author": "Ilkin Iskandarov",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"buildId\":\"18\",\"releaseId\":\"17\",\"buildNumber\":\"18\",\"releaseName\":\"Release-17\",\"collectionUrl\":\"https://dev.azure.com/IlkinIskandarov/\",\"teamProject\":\"dc4571d7-5d8a-4df5-a5a2-c188ebfd8c9f\",\"slotName\":\"production\"}",
+                "start_time": "2018-10-31T09:22:34.379577Z",
+                "end_time": "2018-10-31T09:22:34.379577Z",
+                "active": false
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_qaPrismNodeMongoApi_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourcegroups/qaAKSCluster/providers/Microsoft.Web/sites/qaPrismNodeMongoApi/deployments/161540977290648'.",
+            "type": "Microsoft.Web/sites/deployments",
+            "name": "[concat(parameters('sites_qaPrismNodeMongoApi_name'), '/', parameters('deployments_161540977290648_name'))]",
+            "apiVersion": "2016-08-01",
+            "location": "East US",
+            "scale": null,
+            "properties": {
+                "id": "[parameters('deployments_161540977290648_name')]",
+                "status": 4,
+                "author_email": "",
+                "author": "Ilkin Iskandarov",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"buildId\":\"18\",\"releaseId\":\"16\",\"buildNumber\":\"18\",\"releaseName\":\"Release-16\",\"collectionUrl\":\"https://dev.azure.com/IlkinIskandarov/\",\"teamProject\":\"dc4571d7-5d8a-4df5-a5a2-c188ebfd8c9f\",\"slotName\":\"production\"}",
+                "start_time": "2018-10-31T09:14:53.963485Z",
+                "end_time": "2018-10-31T09:14:53.963485Z",
+                "active": false
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_qaPrismNodeMongoApi_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourceGroups/qaAKSCluster/providers/Microsoft.Web/sites/qaPrismNodeMongoApi/hostNameBindings/qaprismnodemongoapi.azurewebsites.net'.",
+            "type": "Microsoft.Web/sites/hostNameBindings",
+            "name": "[concat(parameters('sites_qaPrismNodeMongoApi_name'), '/', parameters('hostNameBindings_qaprismnodemongoapi.azurewebsites.net_name'))]",
+            "apiVersion": "2016-08-01",
+            "location": "East US",
+            "scale": null,
+            "properties": {
+                "siteName": "qaPrismNodeMongoApi",
+                "domainId": null,
+                "hostNameType": "Verified"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_qaPrismNodeMongoApi_name'))]"
+            ]
+        }
+    ]
+}
