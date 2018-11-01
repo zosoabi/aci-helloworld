@@ -2,8 +2,11 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "databaseAccounts_qavalidateddb_name": {
-            "value": null
+        "serviceBusName": {
+            "value": "servbus"
+        },
+        "cosmosDbName": {
+            "value": "cosm"
         },
         "webhooks_vsts797350ilkiniskandarov_serviceUri": {
             "value": null
@@ -41,36 +44,6 @@
         "registries_qaGit2DockerJenkins2Vsts_name": {
             "value": null
         },
-        "deployments_281541057252343_name": {
-            "value": null
-        },
-        "deployments_271541057157231_name": {
-            "value": null
-        },
-        "deployments_241540997761312_name": {
-            "value": null
-        },
-        "deployments_221540997281233_name": {
-            "value": null
-        },
-        "deployments_211540996790755_name": {
-            "value": null
-        },
-        "deployments_201540991886121_name": {
-            "value": null
-        },
-        "deployments_191540984075099_name": {
-            "value": null
-        },
-        "deployments_181540983562297_name": {
-            "value": null
-        },
-        "deployments_171540977753348_name": {
-            "value": null
-        },
-        "deployments_161540977290648_name": {
-            "value": null
-        },
         "AuthorizationRules_RootManageSharedAccessKey_name": {
             "value": null
         },
@@ -85,6 +58,40 @@
         },
         "managedClusters_qaAKSCluster_logAnalyticsWorkspaceResourceID": {
             "value": null
-        }
+        },
+        "locationCodes": {
+            "value": {
+                "centralus": {
+                    "code": "us-az01"
+                },
+                "eastus": {
+                    "code": "us-az02"
+                },
+                "eastus2": {
+                    "code": "us-az03"
+                },
+                "westus": {
+                    "code": "us-az04"
+                },
+                "northcentralus": {
+                    "code": "us-az05"
+                },
+                "southcentralus": {
+                    "code": "us-az06"
+                },
+                "canadacentral": {
+                    "code": "ca-az07"
+                },
+                "canadaeast": {
+                    "code": "ca-az08"
+                },
+                "westcentralus": {
+                    "code": "us-az09"
+                },
+                "westus2": {
+                    "code": "us-az10"
+                }
+            }
+        }    
     }
 }
