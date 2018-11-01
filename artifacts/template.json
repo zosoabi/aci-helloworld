@@ -123,7 +123,12 @@
     "variables": {
         "locationCode": "[parameters('locationCodes')[resourceGroup().location].code]",
         "prefix": "[concat(variables('locationCode'),'-',parameters('environment'),'-',parameters('teamCode'),'-')]",
+        "clusterName": "[replace(concat(variables('prefix'),parameters('managedClusters_qaAKSCluster_name'),'-001-aks'),'-','')]",
         "serviceBusName": "[replace(concat(variables('prefix'),parameters('namespaces_qaNamespace_name'),'-002-sb'),'-','')]",
+        "appServiceName": "[concat(variables('prefix'),parameters('serverfarms_qaASP_name'),'-001-as')]",
+        "sites_qaPrismNodeMongoApi_name": "[concat(variables('prefix'),parameters('sites_qaPrismNodeMongoApi_name'),'-001-app')]",
+        "sites_qaValidatorPython_name": "[concat(variables('prefix'),parameters('sites_qaValidatorPython_name'),'-001-app')]",
+        "storageName": "[replace(concat(variables('prefix'),parameters('storageAccounts_qastorfiles_name'),'-003-sa'),'-','')]",
         "cosmosDbName": "[concat(variables('prefix'),parameters('cosmosDbName'),'-001-cos')]"
     },
     "resources": [
@@ -136,7 +141,7 @@
             },
             "name": "[parameters('registries_qaGit2DockerJenkins2Vsts_name')]",
             "apiVersion": "2017-10-01",
-            "location": "eastus",
+            "location": "[parameters('location')]",
             "tags": {},
             "scale": null,
             "properties": {
@@ -149,7 +154,7 @@
             "type": "Microsoft.ContainerService/managedClusters",
             "name": "[parameters('managedClusters_qaAKSCluster_name')]",
             "apiVersion": "2018-03-31",
-            "location": "eastus",
+            "location": "[parameters('location')]",
             "scale": null,
             "properties": {
                 "kubernetesVersion": "1.9.11",
@@ -218,17 +223,17 @@
                 "name": "Standard",
                 "tier": "Standard"
             },
-            "name": "[parameters('namespaces_qaNamespace_name')]",
+            "name": "[variables('serviceBusName')]",
             "apiVersion": "2017-04-01",
-            "location": "East US",
+            "location": "[parameters('location')]",
             "tags": {},
             "scale": null,
             "properties": {
                 "provisioningState": "Succeeded",
-                "metricId": "[concat('3ecfcac8-d2fa-4fc2-9027-9a68873afb7f:qanamespace', parameters('namespaces_qaNamespace_name'))]",
+                "metricId": "[concat('3ecfcac8-d2fa-4fc2-9027-9a68873afb7f:qanamespace', variables('serviceBusName'))]",
                 "createdAt": "2018-10-26T11:31:57.643Z",
                 "updatedAt": "2018-10-26T11:32:21.453Z",
-                "serviceBusEndpoint": "[concat('https://', parameters('namespaces_qaNamespace_name'),'.servicebus.windows.net:443/')]",
+                "serviceBusEndpoint": "[concat('https://', variables('serviceBusName'),'.servicebus.windows.net:443/')]",
                 "status": "Active"
             },
             "dependsOn": []
@@ -243,7 +248,7 @@
             "kind": "StorageV2",
             "name": "[parameters('storageAccounts_qastorfiles_name')]",
             "apiVersion": "2018-07-01",
-            "location": "eastus",
+            "location": "[parameters('location')]",
             "tags": {},
             "scale": null,
             "properties": {
@@ -280,12 +285,12 @@
                 "capacity": 1
             },
             "kind": "linux",
-            "name": "[parameters('serverfarms_qaASP_name')]",
+            "name": "[variables('appServiceName')]",
             "apiVersion": "2016-09-01",
-            "location": "East US",
+            "location": "[parameters('location')]",
             "scale": null,
             "properties": {
-                "name": "[parameters('serverfarms_qaASP_name')]",
+                "name": "[variables('appServiceName')]",
                 "workerTierName": null,
                 "adminSiteName": null,
                 "hostingEnvironmentProfile": null,
@@ -300,15 +305,15 @@
             "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourceGroups/qaAKSCluster/providers/Microsoft.Web/sites/qaValidatorPython'.",
             "type": "Microsoft.Web/sites",
             "kind": "app,linux,container",
-            "name": "[parameters('sites_qaValidatorPython_name')]",
+            "name": "[variables('sites_qaValidatorPython_name')]",
             "apiVersion": "2016-08-01",
-            "location": "East US",
+            "location": "[parameters('location')]",
             "scale": null,
             "properties": {
                 "enabled": true,
                 "hostNameSslStates": [
                     {
-                        "name": "[concat(parameters('sites_qaValidatorPython_name'),'qavalidatorpython.azurewebsites.net')]",
+                        "name": "[concat(variables('sites_qaValidatorPython_name'),'.azurewebsites.net')]",
                         "sslState": "Disabled",
                         "virtualIP": null,
                         "thumbprint": null,
@@ -316,7 +321,7 @@
                         "hostType": "Standard"
                     },
                     {
-                        "name": "[concat(parameters('sites_qaValidatorPython_name'),'qavalidatorpython.scm.azurewebsites.net')]",
+                        "name": "[concat(variables('sites_qaValidatorPython_name'),'.scm.azurewebsites.net')]",
                         "sslState": "Disabled",
                         "virtualIP": null,
                         "thumbprint": null,
@@ -324,7 +329,7 @@
                         "hostType": "Repository"
                     }
                 ],
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_qaASP_name'))]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServiceName'))]",
                 "reserved": true,
                 "siteConfig": null,
                 "scmSiteAlsoStopped": false,
@@ -337,22 +342,22 @@
                 "cloningInfo": null
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_qaASP_name'))]"
+                "[resourceId('Microsoft.Web/serverfarms', variables('appServiceName'))]"
             ]
         },
         {
             "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourceGroups/qaAKSCluster/providers/Microsoft.Web/sites/qaPrismNodeMongoApi'.",
             "type": "Microsoft.Web/sites",
             "kind": "app,linux,container",
-            "name": "[parameters('sites_qaPrismNodeMongoApi_name')]",
+            "name": "[variables('sites_qaPrismNodeMongoApi_name')]",
             "apiVersion": "2016-08-01",
-            "location": "East US",
+            "location": "[parameters('location')]",
             "scale": null,
             "properties": {
                 "enabled": true,
                 "hostNameSslStates": [
                     {
-                        "name": "[concat(parameters('sites_qaPrismNodeMongoApi_name'),'qaprismnodemongoapi.azurewebsites.net')]",
+                        "name": "[concat(variables('sites_qaPrismNodeMongoApi_name'),'.azurewebsites.net')]",
                         "sslState": "Disabled",
                         "virtualIP": null,
                         "thumbprint": null,
@@ -360,7 +365,7 @@
                         "hostType": "Standard"
                     },
                     {
-                        "name": "[concat(parameters('sites_qaPrismNodeMongoApi_name'),'qaprismnodemongoapi.scm.azurewebsites.net')]",
+                        "name": "[concat(variables('sites_qaPrismNodeMongoApi_name'),'.scm.azurewebsites.net')]",
                         "sslState": "Disabled",
                         "virtualIP": null,
                         "thumbprint": null,
@@ -368,7 +373,7 @@
                         "hostType": "Repository"
                     }
                 ],
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_qaASP_name'))]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServiceName'))]",
                 "reserved": true,
                 "siteConfig": null,
                 "scmSiteAlsoStopped": false,
@@ -381,7 +386,7 @@
                 "cloningInfo": null
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_qaASP_name'))]"
+                "[resourceId('Microsoft.Web/serverfarms', variables('appServiceName'))]"
             ]
         },
         {
@@ -389,7 +394,7 @@
             "type": "Microsoft.ContainerRegistry/registries/webhooks",
             "name": "[concat(parameters('registries_qaGit2DockerJenkins2Vsts_name'), '/', parameters('webhooks_vsts797350ilkiniskandarov_name'))]",
             "apiVersion": "2017-10-01",
-            "location": "eastus",
+            "location": "[parameters('location')]",
             "tags": {},
             "scale": null,
             "properties": {
@@ -405,9 +410,9 @@
         {
             "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourcegroups/qaAKSCluster/providers/Microsoft.ServiceBus/namespaces/qaNamespace/AuthorizationRules/RootManageSharedAccessKey'.",
             "type": "Microsoft.ServiceBus/namespaces/AuthorizationRules",
-            "name": "[concat(parameters('namespaces_qaNamespace_name'), '/', parameters('AuthorizationRules_RootManageSharedAccessKey_name'))]",
+            "name": "[concat(variables('serviceBusName'), '/', parameters('AuthorizationRules_RootManageSharedAccessKey_name'))]",
             "apiVersion": "2017-04-01",
-            "location": "East US",
+            "location": "[parameters('location')]",
             "scale": null,
             "properties": {
                 "rights": [
@@ -417,15 +422,15 @@
                 ]
             },
             "dependsOn": [
-                "[resourceId('Microsoft.ServiceBus/namespaces', parameters('namespaces_qaNamespace_name'))]"
+                "[resourceId('Microsoft.ServiceBus/namespaces', variables('serviceBusName'))]"
             ]
         },
         {
             "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourcegroups/qaAKSCluster/providers/Microsoft.ServiceBus/namespaces/qaNamespace/queues/qaqueue'.",
             "type": "Microsoft.ServiceBus/namespaces/queues",
-            "name": "[concat(parameters('namespaces_qaNamespace_name'), '/', parameters('queues_qaqueue_name'))]",
+            "name": "[concat(variables('serviceBusName'), '/', parameters('queues_qaqueue_name'))]",
             "apiVersion": "2017-04-01",
-            "location": "East US",
+            "location": "[parameters('location')]",
             "scale": null,
             "properties": {
                 "lockDuration": "PT5M",
@@ -443,15 +448,15 @@
                 "enableExpress": false
             },
             "dependsOn": [
-                "[resourceId('Microsoft.ServiceBus/namespaces', parameters('namespaces_qaNamespace_name'))]"
+                "[resourceId('Microsoft.ServiceBus/namespaces', variables('serviceBusName'))]"
             ]
         },
         {
             "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourceGroups/qaAKSCluster/providers/Microsoft.Web/sites/qaValidatorPython/config/web'.",
             "type": "Microsoft.Web/sites/config",
-            "name": "[concat(parameters('sites_qaValidatorPython_name'), '/', parameters('config_web_name'))]",
+            "name": "[concat(variables('sites_qaValidatorPython_name'), '/', parameters('config_web_name'))]",
             "apiVersion": "2016-08-01",
-            "location": "East US",
+            "location": "[parameters('location')]",
             "scale": null,
             "properties": {
                 "numberOfWorkers": 1,
@@ -559,15 +564,15 @@
                 "reservedInstanceCount": 0
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_qaValidatorPython_name'))]"
+                "[resourceId('Microsoft.Web/sites', variables('sites_qaValidatorPython_name'))]"
             ]
         },
         {
             "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourceGroups/qaAKSCluster/providers/Microsoft.Web/sites/qaValidatorPython/hostNameBindings/qavalidatorpython.azurewebsites.net'.",
             "type": "Microsoft.Web/sites/hostNameBindings",
-            "name": "[concat(parameters('sites_qaValidatorPython_name'), '/', parameters('hostNameBindings_qavalidatorpython.azurewebsites.net_name'))]",
+            "name": "[concat(variables('sites_qaValidatorPython_name'), '/', parameters('hostNameBindings_qavalidatorpython.azurewebsites.net_name'))]",
             "apiVersion": "2016-08-01",
-            "location": "East US",
+            "location": "[parameters('location')]",
             "scale": null,
             "properties": {
                 "siteName": "qaValidatorPython",
@@ -575,15 +580,15 @@
                 "hostNameType": "Verified"
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_qaValidatorPython_name'))]"
+                "[resourceId('Microsoft.Web/sites', variables('sites_qaValidatorPython_name'))]"
             ]
         },
         {
             "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourceGroups/qaAKSCluster/providers/Microsoft.Web/sites/qaPrismNodeMongoApi/config/web'.",
             "type": "Microsoft.Web/sites/config",
-            "name": "[concat(parameters('sites_qaPrismNodeMongoApi_name'), '/', parameters('config_web_name_1'))]",
+            "name": "[concat(variables('sites_qaPrismNodeMongoApi_name'), '/', parameters('config_web_name_1'))]",
             "apiVersion": "2016-08-01",
-            "location": "East US",
+            "location": "[parameters('location')]",
             "scale": null,
             "properties": {
                 "numberOfWorkers": 1,
@@ -691,15 +696,15 @@
                 "reservedInstanceCount": 0
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_qaPrismNodeMongoApi_name'))]"
+                "[resourceId('Microsoft.Web/sites', variables('sites_qaPrismNodeMongoApi_name'))]"
             ]
         },
         {
             "comments": "Generalized from resource: '/subscriptions/3ecfcac8-d2fa-4fc2-9027-9a68873afb7f/resourceGroups/qaAKSCluster/providers/Microsoft.Web/sites/qaPrismNodeMongoApi/hostNameBindings/qaprismnodemongoapi.azurewebsites.net'.",
             "type": "Microsoft.Web/sites/hostNameBindings",
-            "name": "[concat(parameters('sites_qaPrismNodeMongoApi_name'), '/', parameters('hostNameBindings_qaprismnodemongoapi.azurewebsites.net_name'))]",
+            "name": "[concat(variables('sites_qaPrismNodeMongoApi_name'), '/', parameters('hostNameBindings_qaprismnodemongoapi.azurewebsites.net_name'))]",
             "apiVersion": "2016-08-01",
-            "location": "East US",
+            "location": "[parameters('location')]",
             "scale": null,
             "properties": {
                 "siteName": "qaPrismNodeMongoApi",
@@ -707,7 +712,7 @@
                 "hostNameType": "Verified"
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_qaPrismNodeMongoApi_name'))]"
+                "[resourceId('Microsoft.Web/sites', variables('sites_qaPrismNodeMongoApi_name'))]"
             ]
         }
     ]

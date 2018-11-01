@@ -2,62 +2,32 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "serviceBusName": {
-            "value": "servbus"
-        },
         "cosmosDbName": {
             "value": "cosm"
         },
-        "webhooks_vsts797350ilkiniskandarov_serviceUri": {
-            "value": null
-        },
         "serverfarms_qaASP_name": {
-            "value": null
+            "value": "qaASP"
         },
         "sites_qaValidatorPython_name": {
-            "value": null
+            "value": "qaValidatorPython"
         },
         "sites_qaPrismNodeMongoApi_name": {
-            "value": null
+            "value": "qaPrismNodeMongoApi"
         },
         "namespaces_qaNamespace_name": {
-            "value": null
-        },
-        "storageAccounts_qastorfiles_name": {
-            "value": null
-        },
-        "config_web_name": {
-            "value": null
-        },
-        "config_web_name_1": {
-            "value": null
-        },
-        "databaseAccounts_qavalidateddb_name_1": {
-            "value": null
-        },
-        "managedClusters_qaAKSCluster_name": {
-            "value": null
+            "value": "qaNamespace"
         },
         "queues_qaqueue_name": {
-            "value": null
+            "value": "qaqueue"
+        },
+        "managedClusters_qaAKSCluster_name": {
+            "value": "qaAKSCluster"
         },
         "registries_qaGit2DockerJenkins2Vsts_name": {
-            "value": null
+            "value": "qaGit2DockerJenkins2Vsts"
         },
-        "AuthorizationRules_RootManageSharedAccessKey_name": {
-            "value": null
-        },
-        "hostNameBindings_qavalidatorpython.azurewebsites.net_name": {
-            "value": null
-        },
-        "hostNameBindings_qaprismnodemongoapi.azurewebsites.net_name": {
-            "value": null
-        },
-        "webhooks_vsts797350ilkiniskandarov_name": {
-            "value": null
-        },
-        "managedClusters_qaAKSCluster_logAnalyticsWorkspaceResourceID": {
-            "value": null
+        "storageAccounts_qastorfiles_name": {
+            "value": "qastorfiles"
         },
         "locationCodes": {
             "value": {
