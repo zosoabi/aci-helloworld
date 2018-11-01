@@ -6,10 +6,6 @@
             "defaultValue": null,
             "type": "SecureString"
         },
-        "webhooks_vsts797350ilkiniskandarov_serviceUri": {
-            "defaultValue": null,
-            "type": "SecureString"
-        },
         "serverfarms_qaASP_name": {
             "defaultValue": "qaASP",
             "type": "String"
