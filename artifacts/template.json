@@ -401,9 +401,7 @@
                 "scope": "aci-helloworld:*",
                 "actions": [
                     "push"
-                ],
-                "serviceUri": "[parameters('webhooks_vsts797350ilkiniskandarov_serviceUri')]"
-            },
+                ]            },
             "dependsOn": [
                 "[resourceId('Microsoft.ContainerRegistry/registries', parameters('registries_qaGit2DockerJenkins2Vsts_name'))]"
             ]
